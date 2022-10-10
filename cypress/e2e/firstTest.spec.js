@@ -83,14 +83,7 @@ describe('Test with backend', () => {
     cy.get('app-article-list button').eq(1).click().should('contain', '6')
   })
 
-  it.only('it delets a new article in the global feed', () => {
-
-    const userCredentials = {
-      "user": {
-          "email": "artem.bondar16@gmail.com",
-          "password": "CypressTest1"
-      }
-    }
+  it.only('it deletes a new article in the global feed', () => {
 
     const bodyRequest = {
       "article": {
@@ -101,10 +94,7 @@ describe('Test with backend', () => {
       }
     }
 
-    cy.request('POST', 'https://conduit.productionready.io/api/users/login', userCredentials)
-    .its('body').then(body => {
-      const token = body.user.token
-
+    cy.get('@token').then(token => {
       cy.request({
         url: 'https://api.realworld.io/api/articles/',
         headers: {'Authorization': `Token ${token}`},
